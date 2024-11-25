@@ -9,26 +9,26 @@ export default function PaymentForm() {
     const [postalCode, setPostalCode] = useState('')
     const [formErrorMessage, setFormErrorMessage] = useState<string | null>(null)
 
-    const generateStripeToken = async () => {
+   const generateStripeToken = async () => {
         if (!stripe || !elements) {
-            console.log('stripe / elements is not set')
+            console.log('stripe / elements is not set');
             return;
         }
 
         const cardNumberElement = elements.getElement(CardNumberElement);
 
-        const {token, error} = await stripe.createToken(cardNumberElement as StripeCardNumberElement, {
+        const { token, error } = await stripe.createToken(cardNumberElement, {
             name: name,
             address_zip: postalCode
-        })
+        });
 
         if (!token || error) {
-            console.log(error || 'Token is not set')
-            throw error
+            console.log(error || 'Token is not set');
+            throw error;
         }
 
         return token;
-    }
+    };
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
