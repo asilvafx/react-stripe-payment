@@ -34,11 +34,17 @@ export default function PaymentForm() {
         e.preventDefault();
 
         try {
-            const token = await generateStripeToken()
-            alert(token?.id)
-        } catch(err) {
-            console.log('error: ', err)
-            setFormErrorMessage(err.message ?? 'Something went wrong')
+            const token = await generateStripeToken();
+            alert(token?.id);
+        } catch (err) {
+            console.log('error: ', err);
+
+            // Check if the error is an instance of Error
+            if (err instanceof Error) {
+                setFormErrorMessage(err.message);
+            } else {
+                setFormErrorMessage('Something went wrong');
+            }
         }
     }
     return (
